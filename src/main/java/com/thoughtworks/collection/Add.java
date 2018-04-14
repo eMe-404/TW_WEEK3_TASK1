@@ -2,7 +2,9 @@ package com.thoughtworks.collection;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Add {
     public int getSumOfEvens(int leftBorder, int rightBorder) {
@@ -34,11 +36,23 @@ public class Add {
     }
 
     public boolean isIncludedInEvenIndex(List<Integer> arrayList, Integer specialElment) {
-        throw new NotImplementedException();
+        return arrayList.stream()
+                .filter(var -> (var % 2 == 0))
+                .anyMatch(Predicate.isEqual(specialElment));
     }
 
     public List<Integer> getUnrepeatedFromEvenIndex(List<Integer> arrayList) {
-        throw new NotImplementedException();
+        ArrayList<Integer> result = new ArrayList<>();
+        arrayList.stream()
+                .filter(var -> (var % 2 == 0))
+                .forEach(v1 -> getUnrepeated(v1, result));
+        return result;
+    }
+
+    private void getUnrepeated(Integer v1, ArrayList<Integer> result) {
+        if (!result.contains(v1)) {
+            result.add(v1);
+        }
     }
 
     public List<Integer> sortByEvenAndOdd(List<Integer> arrayList) {
